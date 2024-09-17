@@ -1,0 +1,76 @@
+version: "3"
+networks:
+  ambari:
+services:
+  ambari-server:
+    container_name: "ambari-server"
+    hostname: ambari-server
+    image: "ambari-srerver-274"
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    build:
+      context: .
+      dockerfile: "ambari.server.centos7.Dockerfile"
+    ports:
+      - "80:80"
+      - "5005:5005"
+      - "8080:8080"
+    networks:
+      - ambari
+    entrypoint: /bin/bash -c "while true; do echo;sleep 1; done"
+  ambari-agent1:
+    container_name: "ambari-agent1"
+    hostname: ambari-agent1
+    image: "ambari-agent-274"
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    build:
+      context: .
+      dockerfile: "ambari.agent.centos7.Dockerfile"
+    depends_on:
+      - "ambari-server"
+    ports:
+      - "3001:3000"
+ networks:
+      - ambari
+    entrypoint: /bin/bash -c "while true; do echo;sleep 1; done"
+  ambari-agent2:
+    container_name: "ambari-agent2"
+    hostname: ambari-agent2
+    image: "ambari-agent-274"
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    build:
+      context: .
+      dockerfile: "ambari.agent.centos7.Dockerfile"
+    depends_on:
+      - "ambari-server"
+      - "ambari-agent1"
+    ports:
+      - "3002:3000"
+    networks:
+      - ambari
+    entrypoint: /bin/bash -c "while true; do echo;sleep 1; done"
+  ambari-agent3:
+    container_name: "ambari-agent3"
+    hostname: ambari-agent3
+    image: "ambari-agent-274"
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    build:
+      context: .
+      dockerfile: "ambari.agent.centos7.Dockerfile"
+    depends_on:
+      - "ambari-server"
+      - "ambari-agent1"
+      - "ambari-agent1"
+      - "ambari-agent2"
+    ports:
+      - "3003:3000"
+    networks:
+      - ambari
+    entrypoint: /bin/bash -c "while true; do echo;sleep 1; done"
