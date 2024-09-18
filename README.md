@@ -26,3 +26,10 @@ Exec into each agent:
 2.	cat id_rsa.pub >> auth.... (according to https://ambari.apache.org/1.2.5/installing-hadoop-using-ambari/content/ambari-chap1-5-2.html)
 
 https://medium.com/@rumatoest/configure-and-run-apache-ambari-hdp-hdf-stack-on-your-local-machine-inside-docker-167dd6bc6bf6
+
+For almost complete hdp experience:
+
+https://gist.github.com/pm-hwks/7f77811da36ed28cc8469c6e54b15282#file-start_sandbox-hdp2-6-4-sh
+
+
+https://datacadamia.com/db/hortonworks/installation
